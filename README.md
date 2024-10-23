@@ -82,7 +82,7 @@ The tool performs several verification steps on launch:
    - **Build Only**: Creates wheel file without installation
    - **Install Built Wheel**: Installs previously built wheel
    - **Build and Install**: Performs both operations
-   - **CUDA Setup Guide**: Shows CUDA configuration instructions
+   - **CUDA_HOME Setup Guide**: Shows CUDA_HOME configuration instructions
 
 ### Build Management
 
