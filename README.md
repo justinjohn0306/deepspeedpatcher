@@ -134,7 +134,7 @@ move into the folder
    - Install Visual Studio 2019/2022 Community or Build Tools
    - During installation, select "Desktop development with C++"
         - ✅ MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest version is fine)
-        - ✅ Windows 10 SDK (Any recent version, so 10.0.19041.0 or newer is fine)
+        - ✅ Windows 10 or 11 SDK (Any recent version, so 10.0.19041.0 or newer is fine)
         - ✅ C++ core features - Build Tools
         - ✅ C++/CLI support for v142 build tools
         - ✅ C++ Modules for v142 build tools
