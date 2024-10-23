@@ -1,0 +1,35 @@
+{
+    "versions": {
+        "0.15.0": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.0.zip",
+            "cuda_min": "11.0"
+        },
+        "0.15.1": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.1.zip",
+            "cuda_min": "11.0"
+        },
+        "0.15.2": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.2.zip",
+            "cuda_min": "11.0"
+        },
+        "0.15.3": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.3.zip",
+            "cuda_min": "11.0"
+        }
+    },
+    "visual_studio_paths": {
+        "vs2019_buildtools": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools",
+        "vs2019_community": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
+        "vs2022_buildtools": "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools",
+        "vs2022_community": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community"
+    },
+    "required_cuda_components": [
+        "CUDA > Development > Compiler > nvcc",
+        "CUDA > Development > Compiler > Libraries > CUBLAS",
+        "CUDA > Runtime > Libraries > CUBLAS"
+    ],
+    "links": {
+        "visual_studio": "https://visualstudio.microsoft.com/vs/community/",
+        "cuda_toolkit": "https://developer.nvidia.com/cuda-toolkit-archive"
+    }
+}
