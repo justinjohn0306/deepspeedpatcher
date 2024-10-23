@@ -32,6 +32,10 @@ A graphical tool to simplify building and installing DeepSpeed on Windows system
 
 ---
 
+![image](https://github.com/user-attachments/assets/5e85d920-bfd2-462f-80af-ce4a8e1414f2)
+
+---
+
 ## Important Version Compatibility Information
 
 DeepSpeed wheels are environment-specific and must be built for your exact configuration. A built wheel is tied to:
