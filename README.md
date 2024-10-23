@@ -27,6 +27,7 @@ A graphical tool to simplify building and installing DeepSpeed on Windows system
 - [Additional Notes](#additional-notes)
 - [Troubleshooting](#troubleshooting)
 - [Notes for Developers](#notes-for-developers)
+- [Manual Builds of DeepSpeed 0.15.0 and later](#manual-builds-of-deepSpeed-0.15.0-and-later)
 - [Support](#support)
 
 ---
@@ -355,6 +356,110 @@ Note: This tool supports DeepSpeed 0.15.0 and later. Earlier versions may have d
 - Build options are minimized for Windows compatibility
 - The configuration file can be extended for future versions
 - Error handling prioritizes user feedback
+
+## Manual Builds of DeepSpeed 0.15.0 and later
+
+**Building DeepSpeed on Windows - Key Requirements and Observations**
+
+#### Required Software
+- Visual Studio Build Tools or Visual Studio Community Edition with "Desktop development with C++" workload
+  Required Components:
+    - MSVC v142 - VS 2019 C++ x64/x86 build tools
+    - Windows 10 SDK (10.0.19041.0 or newer)
+    - C++ core features - Build Tools
+    - C++/CLI support for v142 build tools
+    - C++ Modules for v142 build tools
+    - C++ CMake tools for Windows
+- NVIDIA CUDA Toolkit (compatible with your PyTorch installation)
+- Python with PyTorch CUDA build installed (e.g., torch==2.4.1+cu121 for CUDA 12.1)
+- Ninja build system (`pip install ninja`) (Required for CUDA compilation)
+- psutil (`pip install psutil`) (I believe this is needed)
+
+Note: If using Visual Studio Code instead of Visual Studio, make sure you've installed the actual Visual Studio Build Tools separately - VS Code's C++ extension default selection alone is not sufficient.
+
+#### CUDA Toolkit Installation
+- Only specific components are required:
+  - CUDA > Development > Compiler > nvcc
+  - CUDA > Development > Libraries > CUBLAS
+  - CUDA > Runtime > Libraries > CUBLAS
+- Full installation is not necessary, saving download/install time
+
+#### Visual Studio Environment Differences
+1. Visual Studio (Full Version):
+   - Developer Command Prompt available from Start Menu
+   - VS environment variables automatically set
+   - 64-bit toolchain readily available
+
+2. Visual Studio Code:
+   - No built-in Developer Command Prompt
+   - Must manually run vcvars64.bat from:
+     `C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat`
+   - Important: Must use 64-bit environment (vcvars64.bat, not vcvars32.bat)
+
+### Key Findings and Gotchas
+
+#### Environment Setup is Critical:
+- The Visual Studio environment MUST be properly initialized before building
+- Using the wrong architecture (32-bit vs 64-bit) will cause compilation failures. 0.15.0 seems to need a x64 Developer Console
+- CUDA_HOME and CUDA_PATH must point to the correct CUDA installation that matches your PyTorch CUDA version
+
+#### Build Process:
+- Must be run with administrative privileges
+- Should be run from a proper x64 Developer Command Prompt or environment
+- Build will fail if Visual Studio x64 toolchain isn't properly initialized as part of Visual Studio/Visual Studio Code
+
+#### Common Issues:
+- aio.lib and cufile.lib errors can be ignored on Windows
+- dskernels module errors often indicate incorrect CUDA environment setup
+- Build may appear to hang during CUDA kernel compilation (be patient and give it a few minutes)
+
+#### Manual Build Steps
+After downloading and extracting a DeepSpeed 0.15.x (or later) build, open an x64 Developer Command Prompt as Administrator (or initialize VS environment manually) and start the desired Python environment you want to build for.
+Set required environment variables (example):
+```
+set CUDA_HOME=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1
+set CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1
+set DISTUTILS_USE_SDK=1
+```
+
+Verify environment is correctly set:
+```
+nvcc -V    # Should show CUDA version
+cl         # Should show MSVC version
+```
+
+Set DeepSpeed build options to 0
+
+```
+set DS_BUILD_AIO=0
+set DS_BUILD_CUTLASS_OPS=0
+set DS_BUILD_EVOFORMER_ATTN=0
+set DS_BUILD_FP_QUANTIZER=0
+set DS_BUILD_RAGGED_DEVICE_OPS=0
+set DS_BUILD_SPARSE_ATTN=0
+```
+Run: 
+```
+python setup.py bdist_wheel
+```
+#### Verification
+After building and installing the wheel, verify CUDA availability with `ds_report` or a Python Script:
+```
+import torch
+print(torch.cuda.is_available())
+import deepspeed
+from deepspeed.ops.op_builder import OpBuilder
+```
+
+- `torch.cuda.is_available()` should return True
+- `ds_report` should show CUDA is available and correctly configured
+- No warnings about missing CUDA components in the output
+
+#### Additional Notes
+Build process needs VS2019 or newer (VS2019 Build Tools minimum requirement)
+CUDA version must be compatible with installed PyTorch version
+Wheel files are specific to Python version, CUDA version, and Windows architecture
+Building in a clean directory prevents potential conflicts
 
 ## Support
 
