@@ -124,11 +124,8 @@ Building DeepSpeed on Windows can be challenging due to specific requirements an
 
 ### Getting the Tool
 
-1. Clone the repository:
+1. Clone the repository:<br>
 `git clone https://github.com/erew123/deepspeedpatcher`
-
-move into the folder
-`cd deepspeedpatcher`
 
 ### Before Running the Tool
 
@@ -185,11 +182,11 @@ move into the folder
 - **Environment Matching**: The DeepSpeed wheel will be built for the Python environment that launches the tool
 - **Admin Rights**: The tool requires administrative privileges to build DeepSpeed
 - **Build Location**: By default, builds occur in a `deepspeed` subdirectory where the tool is run
-- **Archived Wheels**: Completed builds are stored in `deepspeed_wheels` with version information
+- **Archived Wheels**: Completed wheel builds are stored in `deepspeed_wheels` with version information
 
 ### Verification After Building
 
-After building and installing, verify DeepSpeed:
+After building and installing the wheel to your Python environment, verify DeepSpeed with `ds_report` or:
 ```bash
 python -c "import deepspeed; deepspeed.show_env()"
 ```
@@ -197,8 +194,9 @@ python -c "import deepspeed; deepspeed.show_env()"
 ### Common Setup Mistakes to Avoid
 
 1. **Wrong Environment Active**
-   - Building in one environment but trying to use in another
+   - Building a wheel in one environment but trying to use in another that doesnt match
    - Not activating the target environment before running the tool
+   - Not setting the CUDA_HOME environment after installing the wheel and starting your Python environment
 
 2. **Incorrect Order of Installation**
    - Installing CUDA Toolkit after PyTorch
@@ -210,7 +208,7 @@ python -c "import deepspeed; deepspeed.show_env()"
 
 ### Quick Environment Check
 
-Run these commands before starting to verify your setup:
+Run these commands before starting to verify your setup (these checks are performed by the tool on start-up):
 ```bash
 # Check Python version
 python --version
