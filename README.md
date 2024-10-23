@@ -2,6 +2,35 @@
 
 A graphical tool to simplify building and installing DeepSpeed on Windows systems. This tool automates the build process, manages dependencies, and provides clear guidance for CUDA setup.
 
+# Table of Contents
+- [Important Version Compatibility Information](#important-version-compatibility-information)
+  - [Version Compatibility Example](#version-compatibility-example)
+  - [Common Compatibility Issues](#common-compatibility-issues)
+- [Purpose](#purpose)
+- [System Requirements](#system-requirements)
+  - [Mandatory Prerequisites](#mandatory-prerequisites)
+  - [Python Package Dependencies](#python-package-dependencies)
+- [Download and Usage](#download-and-usage)
+  - [Getting the Tool](#getting-the-tool)
+  - [Before Running the Tool](#before-running-the-tool)
+  - [Running the Tool](#running-the-tool)
+  - [Important Notes](#important-notes)
+  - [Verification After Building](#verification-after-building)
+  - [Common Setup Mistakes to Avoid](#common-setup-mistakes-to-avoid)
+  - [Quick Environment Check](#quick-environment-check)
+- [Startup Checks](#startup-checks)
+- [Usage Guide](#usage-guide)
+  - [Building DeepSpeed](#building-deepspeed)
+  - [Build Management](#build-management)
+- [Configuration File](#configuration-file-deepspeed_configjson)
+  - [Adding New Versions](#adding-new-versions)
+- [Additional Notes](#additional-notes)
+- [Troubleshooting](#troubleshooting)
+- [Notes for Developers](#notes-for-developers)
+- [Support](#support)
+
+---
+
 ## Important Version Compatibility Information
 
 DeepSpeed wheels are environment-specific and must be built for your exact configuration. A built wheel is tied to:
@@ -85,6 +114,101 @@ Building DeepSpeed on Windows can be challenging due to specific requirements an
 - PyTorch (must be installed manually)
 - ninja (auto-installed if missing)
 - psutil (auto-installed if missing)
+
+## Download and Usage
+
+### Getting the Tool
+
+1. Clone the repository:
+`git clone https://github.com/erew123/deepspeedpatcher`
+
+move into the folder
+`cd deepspeedpatcher`
+
+### Before Running the Tool
+
+⚠️ **IMPORTANT**: Complete these steps in order:
+
+1. **Install Visual Studio or Visual Studio Build Tools**
+   - Install Visual Studio 2019/2022 Community or Build Tools
+   - During installation, select "Desktop development with C++"
+   - This must be done before proceeding
+
+2. **Install NVIDIA CUDA Toolkit**
+   - Install the appropriate version based on your PyTorch's CUDA version
+   - Example: For PyTorch with CUDA 12.1, install CUDA Toolkit 12.1
+   - Must include development components (nvcc compiler)
+
+3. **Set Up Python Environment**
+   - Create and activate your Python environment (venv, conda, etc.)
+   - Install PyTorch with the desired CUDA version
+   - Verify PyTorch CUDA is working:
+     ```python
+     python -c "import torch; print(f'PyTorch CUDA available: {torch.cuda.is_available()}, Version: {torch.version.cuda}')"
+     ```
+
+### Running the Tool
+
+1. **Activate Your Target Environment**
+   ```bash
+   # If using venv
+   .\venv\Scripts\activate
+
+   # If using conda
+   conda activate your_environment_name
+   ```
+
+2. **Launch the Tool**
+   ```bash
+   python builddeepspeed.py
+   ```
+   - The tool will request administrative privileges
+   - It will perform system checks automatically
+
+### Important Notes
+
+- **Environment Matching**: The DeepSpeed wheel will be built for the Python environment that launches the tool
+- **Admin Rights**: The tool requires administrative privileges to build DeepSpeed
+- **Build Location**: By default, builds occur in a `deepspeed` subdirectory where the tool is run
+- **Archived Wheels**: Completed builds are stored in `deepspeed_wheels` with version information
+
+### Verification After Building
+
+After building and installing, verify DeepSpeed:
+```bash
+python -c "import deepspeed; deepspeed.show_env()"
+```
+
+### Common Setup Mistakes to Avoid
+
+1. **Wrong Environment Active**
+   - Building in one environment but trying to use in another
+   - Not activating the target environment before running the tool
+
+2. **Incorrect Order of Installation**
+   - Installing CUDA Toolkit after PyTorch
+   - Not having Visual Studio/Build Tools installed first
+
+3. **Version Mismatches**
+   - PyTorch CUDA version doesn't match CUDA Toolkit
+   - Using wrong Python version for your needs
+
+### Quick Environment Check
+
+Run these commands before starting to verify your setup:
+```bash
+# Check Python version
+python --version
+
+# Check PyTorch and its CUDA version
+python -c "import torch; print(f'PyTorch {torch.__version__}, CUDA {torch.version.cuda if torch.cuda.is_available() else "Not Available"}')"
+
+# Check CUDA Toolkit
+nvcc --version
+```
+
+All these components must be correctly installed and compatible before running the tool.
+
 
 ## Startup Checks
 
