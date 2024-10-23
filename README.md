@@ -27,7 +27,7 @@ A graphical tool to simplify building and installing DeepSpeed on Windows system
 - [Additional Notes](#additional-notes)
 - [Troubleshooting](#troubleshooting)
 - [Notes for Developers](#notes-for-developers)
-- [Manual Builds of DeepSpeed 0.15.0 and later](#manual-builds-of-deepSpeed-0.15.0-and-later)
+- [Manual Builds of DeepSpeed 0.15.0 and later](#manual-builds-of-deepspeed-0150-and-later)
 - [Support](#support)
 
 ---
