@@ -2,6 +2,50 @@
 
 A graphical tool to simplify building and installing DeepSpeed on Windows systems. This tool automates the build process, manages dependencies, and provides clear guidance for CUDA setup.
 
+## Important Version Compatibility Information
+
+DeepSpeed wheels are environment-specific and must be built for your exact configuration. A built wheel is tied to:
+
+1. **Python Major Version**
+   - Must match exactly (e.g., 3.10.x, 3.11.x)
+   - A wheel built for Python 3.10 won't work on Python 3.11 or 3.9
+
+2. **CUDA Versions** (There are TWO different CUDA versions to consider):
+   
+   a) **PyTorch CUDA Version**
+   - This is the CUDA version that PyTorch was built with
+   - Can be checked with `torch.version.cuda`
+   - This is determined when you install PyTorch
+   - Example: PyTorch 2.1.0+cu121 uses CUDA 12.1
+
+   b) **NVIDIA CUDA Toolkit Version**
+   - This is the full CUDA development toolkit installed on your system
+   - Used for compiling DeepSpeed's CUDA extensions
+   - Must be installed separately from PyTorch
+   - Should be compatible with (same or newer than) your PyTorch CUDA version
+
+   For example:
+   - If PyTorch uses CUDA 11.8 → NVIDIA CUDA Toolkit should be 11.8 or higher
+   - If PyTorch uses CUDA 12.1 → NVIDIA CUDA Toolkit should be 12.1 or higher
+
+### Version Compatibility Example
+```
+Environment A (where wheel was built):
+- Python 3.11.5
+- PyTorch 2.1.0+cu121 (CUDA 12.1)
+- NVIDIA CUDA Toolkit 12.1
+
+This wheel will ONLY work in environments with:
+- Python 3.11.x (any minor version of 3.11)
+- PyTorch built with CUDA 12.1
+- NVIDIA CUDA Toolkit 12.1 or higher
+```
+
+### Common Compatibility Issues
+- Installing a wheel built with Python 3.10 in a Python 3.11 environment
+- Using a wheel built against CUDA 11.8 with PyTorch built for CUDA 12.1
+- Having mismatched PyTorch CUDA and NVIDIA CUDA Toolkit versions
+
 ## Purpose
 
 Building DeepSpeed on Windows can be challenging due to specific requirements and environment setup needs. This tool:
