@@ -448,6 +448,9 @@ You should now be in your Administrative x64 Developer command prompt/console, w
 ```
 python setup.py bdist_wheel
 ```
+
+When this has completed, if successful, there will be a `dist` folder within the DeepSpeed folder that contains your compiled wheel. You can install this with `pip install deepspeed-xxxxxxxxxx.whl` where the x's will be unique to your environment build.
+
 #### Verification
 After building and installing the wheel, verify CUDA availability with `ds_report` or a Python Script:
 ```
