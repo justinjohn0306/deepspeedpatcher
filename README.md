@@ -132,12 +132,22 @@ move into the folder
 1. **Install Visual Studio or Visual Studio Build Tools**
    - Install Visual Studio 2019/2022 Community or Build Tools
    - During installation, select "Desktop development with C++"
+        - ✅ MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest version is fine)
+        - ✅ Windows 10 SDK (Any recent version, so 10.0.19041.0 or newer is fine)
+        - ✅ C++ core features - Build Tools
+        - ✅ C++/CLI support for v142 build tools
+        - ✅ C++ Modules for v142 build tools
+        - ✅ C++ CMake tools for Windows
    - This must be done before proceeding
 
 2. **Install NVIDIA CUDA Toolkit**
    - Install the appropriate version based on your PyTorch's CUDA version
    - Example: For PyTorch with CUDA 12.1, install CUDA Toolkit 12.1
    - Must include development components (nvcc compiler)
+   - Only specific components are required:
+        - ✅ CUDA > Development > Libraries > CUBLAS
+        - ✅ CUDA > Development > Libraries > CUBLAS
+        - ✅ CUDA > Runtime > Libraries > CUBLAS
 
 3. **Set Up Python Environment**
    - Create and activate your Python environment (venv, conda, etc.)
