@@ -366,3 +366,4 @@ For tool-specific issues:
 - Check the log file
 - Verify system requirements
 - Follow the CUDA setup guide
+- I am not Microsoft, I do not make DeepSpeed, I do not support DeepSpeed, please dont ask me questions about DeepSpeed
