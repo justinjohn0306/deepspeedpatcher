@@ -144,7 +144,7 @@ move into the folder
    - Install the appropriate version based on your PyTorch's CUDA version
    - Example: For PyTorch with CUDA 12.1, install CUDA Toolkit 12.1
    - Must include development components (nvcc compiler)
-   - Only specific components are required:
+   - Only specific components **should** be required:
         - ✅ CUDA > Development > Libraries > CUBLAS
         - ✅ CUDA > Development > Libraries > CUBLAS
         - ✅ CUDA > Runtime > Libraries > CUBLAS
