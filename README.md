@@ -1,6 +1,6 @@
 # DeepSpeed Windows Patcher
 
-A graphical tool to simplify building and installing DeepSpeed on Windows systems. This tool automates the build process, manages dependencies, and provides clear guidance for CUDA setup.
+A graphical tool to simplify building and installing DeepSpeed on Windows systems. This tool automates the build process, manages dependencies, and provides clear guidance for CUDA setup. FYI, this was going to be a patcher for earlier builds of DeepSpeed, but I moved the code to be a builder for DeepSpeed 0.15.x and later, but Im too lazy to change the name.
 
 # Table of Contents
 - [Important Version Compatibility Information](#important-version-compatibility-information)
