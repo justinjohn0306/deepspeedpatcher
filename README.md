@@ -190,6 +190,7 @@ Building DeepSpeed on Windows can be challenging due to specific requirements an
 - **Admin Rights**: The tool requires administrative privileges to build DeepSpeed
 - **Build Location**: By default, builds occur in a `deepspeed` subdirectory where the tool is run
 - **Archived Wheels**: Completed wheel builds are stored in `deepspeed_wheels` with version information
+- **Set your CUDA_HOME path**: DeepSpeed needs to be able to find and access the Nvidia CUDA Toolkit's `nvcc.exe` each time DeepSpeed starts up. As such, each and every Python environment you are running that uses DeepSpeed will need its CUDA_HOME environment path variable to be set correctly. Guides on doing this are in the tool.
 
 ### Verification After Building
 
