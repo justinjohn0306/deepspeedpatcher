@@ -522,9 +522,9 @@ flowchart TD
     P -->|Yes| R[Log VS Location]
     N -->|Yes| R
     
-    L --> S[Check CUDA Installation]
-    S --> T{CUDA Found?}
-    T -->|No| U[Show CUDA Install Instructions]
+    L --> S[Check CUDA Toolkit Installation]
+    S --> T{CUDA Toolkit Found?}
+    T -->|No| U[Show CUDA Toolki Install Instructions]
     T -->|Yes| V[Check for NVCC]
     
     L --> W[Check Python Packages]
