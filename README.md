@@ -484,6 +484,108 @@ CUDA version must be compatible with installed PyTorch version
 Wheel files are specific to Python version, CUDA version, and Windows architecture
 Building in a clean directory prevents potential conflicts
 
+#### Manual Instructions Flowchart
+
+```mermaid
+flowchart TD
+    A[Start Manual Build Process] --> B[Prerequisites Check]
+    
+    B --> C[Visual Studio Requirements]
+    C --> C1[VS2019 or newer with C++ Workload]
+    C1 --> C2[Required Components Check]
+    C2 --> C3["MSVC v142 Build Tools
+    Windows 10 SDK
+    C++ Core Features
+    C++/CLI Support
+    C++ Modules
+    C++ CMake Tools"]
+    
+    B --> D[CUDA Requirements]
+    D --> D1[Install Required Components]
+    D1 --> D2["CUDA Compiler (nvcc)
+    CUBLAS Development
+    CUBLAS Runtime"]
+    
+    B --> E[Python Requirements]
+    E --> E1["Compatible PyTorch CUDA
+    Ninja Build System
+    psutil"]
+    
+    C3 & D2 & E1 --> F[Environment Setup]
+    
+    F --> G[Launch VS x64 Developer Command Prompt as Administrator]
+    
+    G --> I[Environment Variables Required]
+    I --> I1["CUDA_HOME
+    CUDA_PATH
+    DISTUTILS_USE_SDK"]
+    
+    I1 --> I2["Instructions:
+    set CUDA_HOME=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1
+    set CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.1
+    set DISTUTILS_USE_SDK=1"]
+    
+    I2 --> J[DeepSpeed Build Options Required]
+    J --> J1["DS_BUILD_AIO
+    DS_BUILD_CUTLASS_OPS
+    DS_BUILD_EVOFORMER_ATTN
+    DS_BUILD_FP_QUANTIZER
+    DS_BUILD_RAGGED_DEVICE_OPS
+    DS_BUILD_SPARSE_ATTN"]
+    
+    J1 --> J2["Instructions:
+    set DS_BUILD_AIO=0
+    set DS_BUILD_CUTLASS_OPS=0
+    set DS_BUILD_EVOFORMER_ATTN=0
+    set DS_BUILD_FP_QUANTIZER=0
+    set DS_BUILD_RAGGED_DEVICE_OPS=0
+    set DS_BUILD_SPARSE_ATTN=0"]
+    
+    J2 --> K[Optional Environment Verification]
+    K --> |Optional| K1[Test nvcc -V]
+    K1 --> |Optional| K2[Test cl]
+    
+    K --> L[Build Process]
+    K1 --> L
+    K2 --> L
+    L --> M[python setup.py bdist_wheel]
+    
+    M --> N{Build Successful?}
+    N -->|Yes| O[Wheel file in dist folder]
+    O --> P[Install with pip]
+    P --> Q[Verify Installation]
+    Q --> Q1["Run ds_report
+    Test torch.cuda.is_available()
+    Check for CUDA warnings"]
+    
+    N -->|No| R[Common Issues]
+    R --> R1["Check VS x64 environment
+    Verify CUDA paths
+    Check admin rights
+    Wait for CUDA compilation"]
+    R1 --> F
+    
+    classDef prereq fill:#cce5ff,stroke:#004085,stroke-width:1px;
+    classDef env fill:#fff3cd,stroke:#856404,stroke-width:1px;
+    classDef vars fill:#f8d7da,stroke:#721c24,stroke-width:1px;
+    classDef instructions fill:#d4edda,stroke:#155724,stroke-width:1px;
+    classDef build fill:#d1ecf1,stroke:#0c5460,stroke-width:1px;
+    classDef verify fill:#e2e3e5,stroke:#383d41,stroke-width:1px;
+    classDef error fill:#f8d7da,stroke:#721c24,stroke-width:1px;
+    classDef optional fill:#e2e3e5,stroke:#383d41,stroke-width:1px,stroke-dasharray: 5 5;
+    
+    class B,C,C1,C2,C3,D,D1,D2,E,E1 prereq;
+    class F,G env;
+    class I,J vars;
+    class I1,J1 vars;
+    class I2,J2 instructions;
+    class L,M,N,O,P build;
+    class Q,Q1 verify;
+    class R,R1 error;
+    class K,K1,K2 optional;
+```
+
+
 ## Support
 
 For DeepSpeed-specific issues, refer to:
