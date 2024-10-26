@@ -479,10 +479,10 @@ from deepspeed.ops.op_builder import OpBuilder
 - No warnings about missing CUDA components in the output
 
 #### Additional Notes
-Build process needs VS2019 or newer (VS2019 Build Tools minimum requirement)
-CUDA version must be compatible with installed PyTorch version
-Wheel files are specific to Python version, CUDA version, and Windows architecture
-Building in a clean directory prevents potential conflicts
+Build process needs VS2019 or newer (VS2019 Build Tools minimum requirement)<br>
+CUDA version must be compatible with installed PyTorch version<br>
+Wheel files are specific to Python version, CUDA version, and Windows architecture<br>
+Building in a clean directory prevents potential conflicts<br>
 **Set your CUDA_HOME path**: DeepSpeed needs to be able to find and access the Nvidia CUDA Toolkit's `nvcc.exe` each time DeepSpeed starts up. As such, each and every Python environment you are running that uses DeepSpeed will need its CUDA_HOME environment path variable to be set correctly. Guides on doing this are in the tool.
 
 #### Manual Instructions Flowchart
