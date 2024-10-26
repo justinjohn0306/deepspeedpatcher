@@ -417,7 +417,7 @@ Note: If using Visual Studio Code instead of Visual Studio, make sure you've ins
 - CUDA_HOME and CUDA_PATH must point to the correct CUDA installation that matches your PyTorch CUDA version
 
 #### Build Process:
-- Must be run with administrative privileges
+- Must be run with **administrative privileges** (This is a requirement of the Microsoft scripts that build DeepSpeed)
 - Should be run from a proper x64 Developer Command Prompt or environment
 - Build will fail if Visual Studio x64 toolchain isn't properly initialized as part of Visual Studio/Visual Studio Code
 
