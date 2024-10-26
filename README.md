@@ -427,7 +427,7 @@ Note: If using Visual Studio Code instead of Visual Studio, make sure you've ins
 - Build may appear to hang during CUDA kernel compilation (be patient and give it a few minutes)
 
 #### Manual Build Steps
-After downloading and extracting a DeepSpeed 0.15.x (or later) build, open a Visual Studio x64 Developer Command Prompt as Administrator (or initialize VS environment manually) and then start the desired Python environment you want to build for.
+After downloading and extracting a DeepSpeed 0.15.x (or later) build, open a Visual Studio x64 Developer Command Prompt **as Administrator** (or initialize VS environment manually) and then start the desired Python environment you want to build for.
 
 You will need to copy/paste the following commands into the command prompt window.
 
