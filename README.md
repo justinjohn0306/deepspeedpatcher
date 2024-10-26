@@ -2,6 +2,8 @@
 
 A graphical tool to simplify building and installing DeepSpeed on Windows systems. This tool automates the build process, manages dependencies, and provides clear guidance for CUDA setup. FYI, this was going to be a patcher for earlier builds of DeepSpeed, but I moved the code to be a builder for DeepSpeed 0.15.x and later, but Im too lazy to change the name.
 
+**NOTE:** If you cannot use the tool for some reason, the **manual** instructions to perform are at the bottom of this page [Manual Builds of DeepSpeed 0.15.0 and later](#manual-builds-of-deepspeed-0150-and-later)
+
 # Table of Contents
 - [Important Version Compatibility Information](#important-version-compatibility-information)
   - [Version Compatibility Example](#version-compatibility-example)
@@ -120,7 +122,7 @@ Building DeepSpeed on Windows can be challenging due to specific requirements an
 4. **Python Environment**
    - Python 3.8 or later
    - PyTorch installed with CUDA support
-   - Admin rights for installation
+   - **Admin rights** for installation (This is a Microsoft requirement for DeepSpeed builds).
 
 ### Python Package Dependencies
 - PyTorch (must be installed manually)
@@ -187,7 +189,7 @@ Building DeepSpeed on Windows can be challenging due to specific requirements an
 ### Important Notes
 
 - **Environment Matching**: The DeepSpeed wheel will be built for the Python environment that launches the tool
-- **Admin Rights**: The tool requires administrative privileges to build DeepSpeed
+- **Admin Rights**: The tool requires administrative privileges to build DeepSpeed. (This is a Microsoft requirement for DeepSpeed builds)
 - **Build Location**: By default, builds occur in a `deepspeed` subdirectory where the tool is run
 - **Archived Wheels**: Completed wheel builds are stored in `deepspeed_wheels` with version information
 - **Set your CUDA_HOME path**: DeepSpeed needs to be able to find and access the Nvidia CUDA Toolkit's `nvcc.exe` each time DeepSpeed starts up. As such, each and every Python environment you are running that uses DeepSpeed will need its CUDA_HOME environment path variable to be set correctly. Guides on doing this are in the tool.
@@ -238,6 +240,7 @@ The tool performs several verification steps on launch:
 1. **Administrative Rights Check**
    - Verifies admin privileges
    - Offers to restart with elevated privileges if needed
+   - Microsoft's routine for compiling DeepSpeed requires Admin rights.
 
 2. **Visual Studio Detection**
    - Checks for VS2019/VS2022 installations
