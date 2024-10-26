@@ -500,7 +500,7 @@ flowchart TD
     C++ Modules
     C++ CMake Tools"]
     
-    B --> D[CUDA Requirements]
+    B --> D[CUDA Toolkit Requirements]
     D --> D1[Install Required Components]
     D1 --> D2["CUDA Compiler (nvcc)
     CUBLAS Development
