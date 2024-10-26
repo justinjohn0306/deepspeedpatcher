@@ -31,6 +31,7 @@ A graphical tool to simplify building and installing DeepSpeed on Windows system
 - [Notes for Developers](#notes-for-developers)
 - [Manual Builds of DeepSpeed 0.15.0 and later](#manual-builds-of-deepspeed-0150-and-later)
 - [Support](#support)
+- [Application Flowchart](#application-flowchart)
 
 ---
 
@@ -494,3 +495,86 @@ For tool-specific issues:
 - Verify system requirements
 - Follow the CUDA setup guide
 - I am not Microsoft, I do not make DeepSpeed, I do not support DeepSpeed, please dont ask me questions about DeepSpeed
+
+---
+
+### Application Flowchart
+
+```mermaid
+flowchart TD
+    A[Start Application] --> B[Check Admin Rights]
+    B --> C{Admin Rights?}
+    C -->|No| D[Prompt for Admin Restart]
+    D --> E{User Accepts?}
+    E -->|Yes| F[Restart with Admin]
+    E -->|No| G[Exit Application]
+    C -->|Yes| H[Load Configuration JSON]
+    H --> I{Config Loaded?}
+    I -->|No| J[Show Error and Exit]
+    I -->|Yes| K[Initialize GUI]
+    
+    K --> L[Check Prerequisites]
+    L --> M[Check Visual Studio]
+    M --> N{VS Found in Default Path?}
+    N -->|No| O[Check Registry for VS]
+    O --> P{VS Found in Registry?}
+    P -->|No| Q[Show VS Install Instructions]
+    P -->|Yes| R[Log VS Location]
+    N -->|Yes| R
+    
+    L --> S[Check CUDA Installation]
+    S --> T{CUDA Found?}
+    T -->|No| U[Show CUDA Install Instructions]
+    T -->|Yes| V[Check for NVCC]
+    
+    L --> W[Check Python Packages]
+    W --> X[Check PyTorch]
+    W --> Y[Check Ninja]
+    W --> Z[Check psutil]
+    
+    R & V & X & Y & Z --> AA{All Prerequisites Met?}
+    AA -->|No| AB[Show Missing Prerequisites]
+    AA -->|Yes| AC[Enable Build/Install Buttons]
+    
+    AC --> AD[Wait for User Action]
+    AD --> AE{Action Selected}
+    AE -->|Build Only| AF[Start Build Process]
+    AE -->|Install Only| AG[Start Install Process]
+    AE -->|Build & Install| AH[Start Combined Process]
+    
+    AF & AH --> AI[Create Build Directory]
+    AI --> AJ[Download DeepSpeed from GitHub]
+    AJ --> AK[Extract ZIP Archive]
+    AK --> AL[Move Files to Build Dir]
+    AL --> AM[Create Build Script]
+    
+    AM --> AN[Set Environment Variables]
+    AN --> AO[Run Build Script]
+    AO --> AP{Build Successful?}
+    AP -->|No| AQ[Show Build Error]
+    AP -->|Yes| AR[Archive Wheel File]
+    
+    AR --> AS{Install Requested?}
+    AS -->|No| AT[Show Build Success]
+    AS -->|Yes| AU[Uninstall Existing DeepSpeed]
+    AU --> AV[Install New Wheel]
+    AV --> AW{Install Successful?}
+    AW -->|No| AX[Show Install Error]
+    AW -->|Yes| AY[Show Success Message]
+    
+    AY --> AZ{Show CUDA Setup?}
+    AZ -->|Yes| BA[Display CUDA Setup Guide]
+    AZ -->|No| BB[End Process]
+
+    classDef startEnd fill:#f9d5e5,stroke:#333,stroke-width:2px;
+    classDef process fill:#eeeeee,stroke:#333,stroke-width:1px;
+    classDef decision fill:#e3f2fd,stroke:#333,stroke-width:1px;
+    classDef error fill:#ffcdd2,stroke:#333,stroke-width:1px;
+    classDef success fill:#c8e6c9,stroke:#333,stroke-width:1px;
+
+    class A,G,BB startEnd;
+    class B,H,K,L,M,O,R,V,W,X,Y,Z,AI,AJ,AK,AL,AM,AN,AO,AR,AU,AV process;
+    class C,E,I,N,P,T,AA,AE,AP,AS,AW,AZ decision;
+    class J,Q,U,AB,AQ,AX error;
+    class AT,AY,BA success;
+```
