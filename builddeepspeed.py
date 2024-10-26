@@ -240,29 +240,57 @@ class DeepSpeedPatcher:
             foreground='dark blue'
         )
         cuda_help.grid(row=12, column=0, columnspan=2, pady=5)  
+
+
+    def find_vs_installation(self):
+        """Find Visual Studio installation with C++ build tools"""
+        # First check default locations
+        default_vs_paths = {
+            "VS2019 BuildTools": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools",
+            "VS2019 Community": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
+            "VS2022 BuildTools": "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools",
+            "VS2022 Community": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community"
+        }
+        
+        # Check default paths first
+        for vs_name, vs_path in default_vs_paths.items():
+            vcvars_path = os.path.join(vs_path, "VC\\Auxiliary\\Build\\vcvars64.bat")
+            if os.path.exists(vcvars_path):
+                return vs_name, vs_path, vcvars_path
+
+        # If not found in default locations, check registry
+        vs_reg_paths = [
+            (r"SOFTWARE\Microsoft\VisualStudio\Setup\Community", "2022"),
+            (r"SOFTWARE\Microsoft\VisualStudio\Setup\BuildTools", "2022"),
+            (r"SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup\Community", "2019"),
+            (r"SOFTWARE\WOW6432Node\Microsoft\VisualStudio\Setup\BuildTools", "2019")
+        ]
+        
+        for reg_path, version in vs_reg_paths:
+            try:
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, reg_path) as key:
+                    install_path = winreg.QueryValueEx(key, "InstallDir")[0]
+                    if install_path:
+                        parent_path = str(Path(install_path).parent)
+                        vcvars_path = os.path.join(parent_path, "VC", "Auxiliary", "Build", "vcvars64.bat")
+                        if os.path.exists(vcvars_path):
+                            edition = "Community" if "Community" in reg_path else "BuildTools"
+                            vs_name = f"VS{version} {edition}"
+                            return vs_name, parent_path, vcvars_path
+            except WindowsError:
+                continue
+        
+        return None, None, None
             
     def run_build_process(self):
-        """Run the build process using VS 64-bit environment"""
         try:
-            # Find VS installation
-            vs_paths = {
-                "VS2019 BuildTools": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools",
-                "VS2019 Community": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
-                "VS2022 BuildTools": "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools",
-                "VS2022 Community": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community"
-            }
-            
-            # Find vcvars64.bat
-            vcvars_path = None
-            for vs_name, vs_path in vs_paths.items():
-                candidate = os.path.join(vs_path, "VC\\Auxiliary\\Build\\vcvars64.bat")
-                if os.path.exists(candidate):
-                    vcvars_path = candidate
-                    self.log(f"Using Visual Studio 64-bit tools from: {vs_path}")
-                    break
+            # Find VS installation using our detection method
+            vs_name, vs_path, vcvars_path = self.find_vs_installation()
             
             if not vcvars_path:
                 raise Exception("Visual Studio 64-bit build tools not found")
+                
+            self.log(f"Using Visual Studio 64-bit tools from: {vs_path}")
 
             # Create a batch file that will set up environment and run our build
             build_script = os.path.join(self.install_dir_var.get(), "run_build.bat")
@@ -597,33 +625,19 @@ class DeepSpeedPatcher:
         
         # Check Visual Studio installation
         self.log("\nChecking Visual Studio installation:")
-        try:
-            vs_paths = {
-                "VS2019 BuildTools": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools",
-                "VS2019 Community": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
-                "VS2022 BuildTools": "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools",
-                "VS2022 Community": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community"
-            }
-            
-            vs_found = False
-            for vs_name, vs_path in vs_paths.items():
-                vcvars_path = os.path.join(vs_path, "VC\\Auxiliary\\Build\\vcvars64.bat")
-                if os.path.exists(vcvars_path):
-                    self.log(f"✓ Found {vs_name} at: {vs_path}")
-                    vs_found = True
-                    break
-            
-            if not vs_found:
-                self.log("❌ No compatible Visual Studio installation found")
-                self.log("Please install Visual Studio Community Edition from:")
-                self.log("https://visualstudio.microsoft.com/vs/community/")
-                self.log("During installation, select 'Desktop development with C++'")
-                prerequisites_met = False
-            
-        except Exception as e:
-            self.log(f"Error checking Visual Studio: {str(e)}")
-            prerequisites_met = False
+        vs_name, vs_path, vcvars_path = self.find_vs_installation()
         
+        if vcvars_path:
+            self.log(f"✓ Found {vs_name} at: {vs_path}")
+            vs_found = True
+        else:
+            self.log("❌ No compatible Visual Studio installation found")
+            self.log("Please install Visual Studio Community Edition from:")
+            self.log("https://visualstudio.microsoft.com/vs/community/")
+            self.log("During installation, select 'Desktop development with C++'")
+            prerequisites_met = False
+            vs_found = False
+                   
         # Check CUDA installation
         self.log("\nChecking CUDA installation:")
         try:
