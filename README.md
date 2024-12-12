@@ -41,6 +41,8 @@ A graphical tool to simplify building and installing DeepSpeed on Windows system
 
 ## Important Version Compatibility Information
 
+⚠️ **Note**: I have no idea if new versions of Pyton, PyTorch, CUDA, DeepSpeed will always compile nicely. There are too many varations and really its up to Microsoft to let us know what does and doesnt work. This tool is as-is, just designed to make things simpler and has been tested with Python 3.11.x, PyTorch 2.4.1 and CUDA 12.1, with DeepSpeed up to version 16.1, on a Windows 11 system, with all the prerequisites correctly installed.
+
 DeepSpeed wheels are environment-specific and must be built for your exact configuration. A built wheel is tied to:
 
 1. **Python Major Version**
