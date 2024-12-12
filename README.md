@@ -430,6 +430,8 @@ Note: If using Visual Studio Code instead of Visual Studio, make sure you've ins
 #### Manual Build Steps
 After downloading and extracting a DeepSpeed 0.15.x (or later) build, open a Visual Studio x64 Developer Command Prompt (vcvars64.bat) **as Administrator** (or initialize VS environment manually) and then start the desired Python environment you want to build for.
 
+![image](https://github.com/user-attachments/assets/d65d566b-312c-4cf9-bb9a-5b0fa490ab30)
+
 You will need to copy/paste the following commands into the command prompt window.
 
 Set required environment variables to point to your Nvidia CUDA Toolkit just before the bin path where nvcc.exe is located (example below, but you need to confirm your paths to the correct location):
