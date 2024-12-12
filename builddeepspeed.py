@@ -43,7 +43,9 @@ class DeepSpeedPatcher:
         # Initialize main window
         self.root = tk.Tk()        
         self.root.title("DeepSpeed Windows Patcher")
-        self.root.geometry("1400x880")
+        self.root.geometry("1400x970")
+        self.root.rowconfigure(0, weight=1)
+        self.root.columnconfigure(0, weight=1)
 
         # Get Python version
         self.python_version = platform.python_version()
@@ -62,8 +64,9 @@ class DeepSpeedPatcher:
 
         # Style configuration
         style = ttk.Style()
-        style.configure('Header.TLabel', font=('Helvetica', 12, 'bold'))
-        style.configure('Info.TLabel', font=('Helvetica', 10))
+        style.configure('Header.TLabel', font=('Helvetica', 14, 'bold'))
+        style.configure('Info.TLabel', font=('Helvetica', 12))
+        style.configure("Big.TButton", font=("Helvetica", 12), padding=10)
 
         # Initialize log file
         self.log_file = open('deepspeed_build.log', 'w', encoding='utf-8', buffering=1)
@@ -124,7 +127,7 @@ class DeepSpeedPatcher:
         """Create the main GUI interface"""
         # Configure grid weights for main window
         self.root.grid_rowconfigure(0, weight=1)
-        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)       
         
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
@@ -227,10 +230,10 @@ class DeepSpeedPatcher:
         button_frame.grid(row=10, column=0, columnspan=2, pady=10)
         
         # Add CUDA Setup button alongside other buttons
-        ttk.Button(button_frame, text="Build Only", command=self.build_only).grid(row=0, column=0, padx=5)
-        ttk.Button(button_frame, text="Install Built Wheel", command=self.install_wheel).grid(row=0, column=1, padx=5)
-        ttk.Button(button_frame, text="Build and Install", command=self.start_installation).grid(row=0, column=2, padx=5)
-        ttk.Button(button_frame, text="CUDA Setup Guide", command=self.show_cuda_setup_info).grid(row=0, column=3, padx=5)
+        ttk.Button(button_frame, text="Build Only", style="Big.TButton", command=self.build_only).grid(row=0, column=0, padx=5)
+        ttk.Button(button_frame, text="Install Built Wheel", style="Big.TButton", command=self.install_wheel).grid(row=0, column=1, padx=5)
+        ttk.Button(button_frame, text="Build and Install", style="Big.TButton", command=self.start_installation).grid(row=0, column=2, padx=5)
+        ttk.Button(button_frame, text="CUDA Setup Guide", style="Big.TButton", command=self.show_cuda_setup_info).grid(row=0, column=3, padx=5)        
 
         # Add separator and CUDA setup help text
         ttk.Separator(main_frame).grid(row=11, column=0, columnspan=2, pady=10, sticky="ew")

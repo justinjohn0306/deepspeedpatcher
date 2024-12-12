@@ -15,7 +15,19 @@
         "0.15.3": {
             "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.3.zip",
             "cuda_min": "11.0"
-        }
+        },
+        "0.15.4": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.15.4.zip",
+            "cuda_min": "11.0"
+        },
+        "0.16.0": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.16.0.zip",
+            "cuda_min": "11.0"
+        },
+        "0.16.1": {
+            "url": "https://github.com/microsoft/DeepSpeed/archive/refs/tags/v0.16.1.zip",
+            "cuda_min": "11.0"
+        }                        
     },
     "visual_studio_paths": {
         "vs2019_buildtools": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools",
