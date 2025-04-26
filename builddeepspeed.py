@@ -299,6 +299,9 @@ class DeepSpeedPatcher:
             build_script = os.path.join(self.install_dir_var.get(), "run_build.bat")
             with open(build_script, 'w') as f:
                 f.write('@echo off\n')
+                f.write('chcp 65001\n')  # Set command window code page to UTF-8
+                f.write('set PYTHONUTF8=1\n')  # Force Python to use UTF-8 for I/O
+                f.write('set PYTHONIOENCODING=utf-8\n')  # Ensure Python uses UTF-8 for its I/O encoding                
                 # Call vcvars64.bat explicitly for 64-bit environment
                 f.write(f'call "{vcvars_path}"\n')
                 # Set up environment variables
