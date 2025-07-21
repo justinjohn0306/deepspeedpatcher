@@ -305,7 +305,7 @@ class DeepSpeedPatcher:
                 # Call vcvars64.bat explicitly for 64-bit environment
                 f.write(f'call "{vcvars_path}"\n')
                 #f.write(f'call "{vcvars_path}" x64 -vcvars_ver=14.29\n')
-                # Skip Git hash
+                # Fix Git hash
                 f.write('set DS_BUILD_STRING=+nogit\n')
                 # Set up environment variables
                 f.write(f'set CUDA_PATH=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v{self.cuda_var.get()}\n')
