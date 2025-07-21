@@ -303,8 +303,8 @@ class DeepSpeedPatcher:
                 f.write('set PYTHONUTF8=1\n')  # Force Python to use UTF-8 for I/O
                 f.write('set PYTHONIOENCODING=utf-8\n')  # Ensure Python uses UTF-8 for its I/O encoding                
                 # Call vcvars64.bat explicitly for 64-bit environment
-                #f.write(f'call "{vcvars_path}"\n')
-                f.write(f'call "{vcvars_path}" x64 -vcvars_ver=14.29\n')
+                f.write(f'call "{vcvars_path}"\n')
+                #f.write(f'call "{vcvars_path}" x64 -vcvars_ver=14.29\n')
                 # Skip Git hash
                 f.write('set DS_BUILD_STRING=nogit\n')
                 # Set up environment variables
