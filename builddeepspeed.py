@@ -318,6 +318,7 @@ class DeepSpeedPatcher:
                 f.write('set DS_BUILD_FP_QUANTIZER=0\n')
                 f.write('set DS_BUILD_RAGGED_DEVICE_OPS=0\n')
                 f.write('set DS_BUILD_SPARSE_ATTN=0\n')
+                f.write('set DS_BUILD_TRANSFORMER_INFERENCE=0\n')
                 # Echo environment for debugging
                 f.write('echo ============ Environment Variables ============\n')
                 f.write('echo CUDA_PATH=%CUDA_PATH%\n')
